@@ -1,0 +1,23 @@
+<h2>Kegiatan Hari Ini ({{ kegiatan_list|length }})</h2>
+<!-- Tombol Logout -->
+<form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+<ul>
+{% for kegiatan in kegiatan_list %}
+    <li>
+        <strong>{{ kegiatan.nama }}</strong> ({{ kegiatan.tanggal }}) <br>
+        {% if kegiatan.id in sudah_absen_ids %}
+            ✅ Sudah Absen
+        {% else %}
+            <form method="POST" action="{% url 'absen_kegiatan' kegiatan.id %}">
+                {% csrf_token %}
+                <button type="submit">Absen</button>
+            </form>
+        {% endif %}
+    </li>
+{% empty %}
+    <li>Tidak ada kegiatan hari ini.</li>
+{% endfor %}
+</ul>

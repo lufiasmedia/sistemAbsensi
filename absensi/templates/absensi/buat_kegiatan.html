@@ -1,0 +1,8 @@
+<h2>Buat Kegiatan Baru</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="nama" placeholder="Nama Kegiatan" required><br>
+    <input type="date" name="tanggal" required><br>
+    <textarea name="keterangan" placeholder="Keterangan"></textarea><br>
+    <button type="submit">Simpan</button>
+</form>

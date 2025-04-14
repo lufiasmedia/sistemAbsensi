@@ -1,0 +1,19 @@
+<h2>Kehadiran untuk {{ kegiatan.nama }}</h2>
+<!-- Tombol Logout -->
+<form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
+
+<!-- Tombol Logout -->
+<form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
+<ul>
+{% for hadir in daftar %}
+    <li>{{ hadir.user.username }} - {{ hadir.waktu_absen }}</li>
+{% endfor %}
+</ul>

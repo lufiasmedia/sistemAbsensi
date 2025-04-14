@@ -1,0 +1,19 @@
+<h2>Daftar Kegiatan</h2>
+<a href="{% url 'buat_kegiatan' %}">+ Buat Kegiatan</a>
+
+<!-- Tombol Logout -->
+<form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
+
+<ul>
+{% for keg in kegiatan %}
+    <li>
+        {{ keg.nama }} ({{ keg.tanggal }}) -
+        <a href="{% url 'absen_kegiatan' keg.id %}">Absen</a> -
+        <a href="{% url 'daftar_kehadiran' keg.id %}">Lihat Kehadiran</a>
+    </li>
+{% endfor %}
+</ul>

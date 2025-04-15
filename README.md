@@ -97,8 +97,8 @@ Sistem ini dirancang untuk mencatat kehadiran anggota IMM Kolaka Utara dalam keg
 ### 1. Buat Proyek Django di PyCharm Professional
 
 ```bash
-django-admin startproject absensi_imm
-cd absensi_imm
+django-admin startproject sistemAbsensi
+cd sistemAbsensi
 ```
 
 ### 2. Buat Ketiga App

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users.apps.UsersConfig",
     "absensi.apps.AbsensiConfig",
-    "setting_app.apps.SettingAppConfig"
+    "setting_app.apps.SettingAppConfig",
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,7 @@ LOGIN_URL = '/users/login/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
 

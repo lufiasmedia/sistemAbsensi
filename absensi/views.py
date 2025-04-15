@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
+from setting_app.models import Organisasi
 from .models import Kegiatan, Kehadiran
 from django.contrib.auth.decorators import login_required
 
@@ -77,7 +79,12 @@ def kegiatan_hari_ini(request):
     # Kegiatan yang sudah diabsen oleh user hari ini
     sudah_absen_ids = absen_list.values_list('kegiatan_id', flat=True)
 
+    organisasi = Organisasi.objects.first()
+
     return render(request, 'absensi/kegiatan_hari_ini.html', {
         'kegiatan_list': kegiatan_list,
-        'sudah_absen_ids': sudah_absen_ids
+        'sudah_absen_ids': sudah_absen_ids,
+        'kegiatan_list': kegiatan_list,
+        'sudah_absen_ids': sudah_absen_ids,
+        'organisasi': organisasi,
     })

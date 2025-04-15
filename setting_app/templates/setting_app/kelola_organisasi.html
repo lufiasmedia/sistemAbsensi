@@ -1,0 +1,22 @@
+<!-- templates/setting_app/kelola_organisasi.html -->
+<h2>Kelola Data Organisasi</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+        {% if organisasi %} Update {% else %} Simpan {% endif %}
+    </button>
+</form>
+
+{% if organisasi %}
+    <h3>Preview Saat Ini</h3>
+    <p><strong>Nama:</strong> {{ organisasi.nama }}</p>
+    <p><strong>Alamat:</strong> {{ organisasi.alamat }}</p>
+    {% if organisasi.logo %}
+        <img src="{{ organisasi.logo.url }}" width="100"><br>
+    {% endif %}
+    {% if organisasi.favicon %}
+        <img src="{{ organisasi.favicon.url }}" width="30"><br>
+    {% endif %}
+{% endif %}

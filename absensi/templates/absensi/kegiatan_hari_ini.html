@@ -23,41 +23,133 @@
 {#</ul>#}
 
 
-<!-- Profil Pengguna -->
-<div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px;">
-    <h3>Selamat datang, {{ request.user.profile.nama_lengkap }}</h3>
-    <p>Jabatan: {{ request.user.profile.jabatan }}</p>
+{#<!-- Profil Pengguna -->#}
+{#<div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px;">#}
+{#    <h3>Selamat datang, {{ request.user.profile.nama_lengkap }}</h3>#}
+{#    <p>Jabatan: {{ request.user.profile.jabatan }}</p>#}
+{##}
+{#    {% if request.user.profile.foto %}#}
+{#        <img src="{{ request.user.profile.foto.url }}" alt="Foto Profil" style="width: 100px; border-radius: 50px;">#}
+{#    {% else %}#}
+{#        <p><em>Foto belum diunggah</em></p>#}
+{#    {% endif %}#}
+{#</div>#}
+{##}
+{#<!-- Tombol Logout -->#}
+{#<form method="POST" action="{% url 'logout' %}">#}
+{#    {% csrf_token %}#}
+{#    <button type="submit">Logout</button>#}
+{#</form>#}
+{##}
+{#<!-- Daftar Kegiatan -->#}
+{#<h2>Kegiatan Hari Ini ({{ kegiatan_list|length }})</h2>#}
+{#<ul>#}
+{#{% for kegiatan in kegiatan_list %}#}
+{#    <li>#}
+{#        <strong>{{ kegiatan.nama }}</strong> ({{ kegiatan.tanggal }}) <br>#}
+{#        {% if kegiatan.id in sudah_absen_ids %}#}
+{#            ✅ Sudah Absen#}
+{#        {% else %}#}
+{#            <form method="POST" action="{% url 'absen_kegiatan' kegiatan.id %}">#}
+{#                {% csrf_token %}#}
+{#                <button type="submit">Absen</button>#}
+{#            </form>#}
+{#        {% endif %}#}
+{#    </li>#}
+{#{% empty %}#}
+{#    <li>Tidak ada kegiatan hari ini.</li>#}
+{#{% endfor %}#}
+{#</ul>#}
 
-    {% if request.user.profile.foto %}
-        <img src="{{ request.user.profile.foto.url }}" alt="Foto Profil" style="width: 100px; border-radius: 50px;">
-    {% else %}
-        <p><em>Foto belum diunggah</em></p>
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kegiatan Hari Ini</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .profile-box {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+    }
+    .kegiatan-item {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container py-4">
+
+  <!-- Header Organisasi -->
+  <div class="text-center mb-4">
+    {% if organisasi.logo %}
+      <img src="{{ organisasi.logo.url }}" alt="Logo Organisasi" style="height: 60px;">
     {% endif %}
+    <h3 class="mt-2">{{ organisasi.nama }}</h3>
+  </div>
+
+  <!-- Profil Pengguna -->
+  <div class="profile-box d-flex align-items-center">
+    {% if request.user.profile.foto %}
+      <img src="{{ request.user.profile.foto.url }}" class="profile-img me-3" alt="Foto Profil">
+    {% else %}
+      <div class="me-3 text-muted">🧑</div>
+    {% endif %}
+    <div>
+      <h5 class="mb-1">Selamat datang, {{ request.user.profile.nama_lengkap }}</h5>
+      <p class="mb-0">Jabatan: <strong>{{ request.user.profile.jabatan }}</strong></p>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="ms-auto">
+      <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Daftar Kegiatan Hari Ini -->
+  <h4 class="mb-3 mt-4">Kegiatan Hari Ini ({{ kegiatan_list|length }})</h4>
+
+  {% for kegiatan in kegiatan_list %}
+    <div class="kegiatan-item">
+      <strong>{{ kegiatan.nama }}</strong>
+      <div class="text-muted small">Tanggal: {{ kegiatan.tanggal }}</div>
+
+      {% if kegiatan.id in sudah_absen_ids %}
+        <div class="text-success mt-2">✅ Kamu sudah absen.</div>
+      {% else %}
+        <form method="POST" action="{% url 'absen_kegiatan' kegiatan.id %}" class="mt-2">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-success">Absen Sekarang</button>
+        </form>
+      {% endif %}
+    </div>
+  {% empty %}
+    <div class="alert alert-info">Tidak ada kegiatan hari ini.</div>
+  {% endfor %}
+
 </div>
 
-<!-- Tombol Logout -->
-<form method="POST" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+</body>
+</html>
 
-<!-- Daftar Kegiatan -->
-<h2>Kegiatan Hari Ini ({{ kegiatan_list|length }})</h2>
-<ul>
-{% for kegiatan in kegiatan_list %}
-    <li>
-        <strong>{{ kegiatan.nama }}</strong> ({{ kegiatan.tanggal }}) <br>
-        {% if kegiatan.id in sudah_absen_ids %}
-            ✅ Sudah Absen
-        {% else %}
-            <form method="POST" action="{% url 'absen_kegiatan' kegiatan.id %}">
-                {% csrf_token %}
-                <button type="submit">Absen</button>
-            </form>
-        {% endif %}
-    </li>
-{% empty %}
-    <li>Tidak ada kegiatan hari ini.</li>
-{% endfor %}
-</ul>
 

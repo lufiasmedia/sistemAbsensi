@@ -1,9 +1,48 @@
-<h2>Kegiatan Hari Ini ({{ kegiatan_list|length }})</h2>
+{#<h2>Kegiatan Hari Ini ({{ kegiatan_list|length }})</h2>#}
+{#<!-- Tombol Logout -->#}
+{#<form method="POST" action="{% url 'logout' %}">#}
+{#    {% csrf_token %}#}
+{#    <button type="submit">Logout</button>#}
+{#</form>#}
+{#<ul>#}
+{#{% for kegiatan in kegiatan_list %}#}
+{#    <li>#}
+{#        <strong>{{ kegiatan.nama }}</strong> ({{ kegiatan.tanggal }}) <br>#}
+{#        {% if kegiatan.id in sudah_absen_ids %}#}
+{#            ✅ Sudah Absen#}
+{#        {% else %}#}
+{#            <form method="POST" action="{% url 'absen_kegiatan' kegiatan.id %}">#}
+{#                {% csrf_token %}#}
+{#                <button type="submit">Absen</button>#}
+{#            </form>#}
+{#        {% endif %}#}
+{#    </li>#}
+{#{% empty %}#}
+{#    <li>Tidak ada kegiatan hari ini.</li>#}
+{#{% endfor %}#}
+{#</ul>#}
+
+
+<!-- Profil Pengguna -->
+<div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px;">
+    <h3>Selamat datang, {{ request.user.profile.nama_lengkap }}</h3>
+    <p>Jabatan: {{ request.user.profile.jabatan }}</p>
+
+    {% if request.user.profile.foto %}
+        <img src="{{ request.user.profile.foto.url }}" alt="Foto Profil" style="width: 100px; border-radius: 50px;">
+    {% else %}
+        <p><em>Foto belum diunggah</em></p>
+    {% endif %}
+</div>
+
 <!-- Tombol Logout -->
 <form method="POST" action="{% url 'logout' %}">
     {% csrf_token %}
     <button type="submit">Logout</button>
 </form>
+
+<!-- Daftar Kegiatan -->
+<h2>Kegiatan Hari Ini ({{ kegiatan_list|length }})</h2>
 <ul>
 {% for kegiatan in kegiatan_list %}
     <li>
@@ -21,3 +60,4 @@
     <li>Tidak ada kegiatan hari ini.</li>
 {% endfor %}
 </ul>
+

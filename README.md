@@ -1,3 +1,92 @@
+
+## ✅ CARA CLONE PROYEK DARI GITHUB KE PYCHARM PROFESSIONAL
+
+### 🔹 1. **Salin URL Repository**
+Klik tombol `<> Code` di halaman GitHub:
+```
+https://github.com/lufiasmedia/sistemAbsensi.git
+```
+
+---
+
+### 🔹 2. **Buka PyCharm Professional**
+
+- Pilih menu utama:  
+  **File → New → Project from Version Control**
+
+- Pilih: **Git**
+
+---
+
+### 🔹 3. **Paste URL dan Pilih Lokasi Penyimpanan**
+
+- Di kolom **URL**, tempelkan:
+  ```
+  https://github.com/lufiasmedia/sistemAbsensi.git
+  ```
+
+- Di kolom **Directory**, pilih folder di komputer kamu tempat proyek ini akan disimpan.
+
+---
+
+### 🔹 4. **Klik Clone**
+
+Tunggu hingga PyCharm selesai mengunduh semua file dari GitHub.
+
+---
+
+### 🔹 5. **Aktifkan Virtual Environment dan Install Django**
+
+- Buka terminal di PyCharm: (OPSIONAL)
+```bash
+python -m venv env
+source env/bin/activate      # Mac/Linux
+env\Scripts\activate         # Windows
+pip install -r requirements.txt  # Jika file ini tersedia
+```
+
+> Jika `requirements.txt` belum ada, install Django secara manual:
+```bash
+pip install django
+```
+
+---
+
+### 🔹 6. **Jalankan Server Django**
+
+Masih di terminal, jalankan:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+
+---
+
+### 🔹 7. **Buka Aplikasi di Browser**
+
+Buka browser kamu dan kunjungi:
+```
+http://127.0.0.1:8000/
+```
+
+---
+
+### 🔹 8. **(Opsional) Buat Superuser untuk Login Admin**
+```bash
+python manage.py createsuperuser
+```
+
+---
+
+Kalau kamu butuh bantuan untuk:
+- Menambahkan fitur baru
+- Mengatur tampilan login
+- Men-deploy ke hosting
+
+Saya siap bantu 💪
+
+
 ## 📋 **Analisis Kebutuhan Sistem Manajemen Absensi IMM Kolaka Utara**
 
 ### 1. 👥 **Pengguna (User Roles):**
